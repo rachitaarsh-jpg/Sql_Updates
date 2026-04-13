@@ -27,4 +27,57 @@ set allergies = 'NKA' where allergies IS NULL;
 
 SELECT concat(first_name,' ',last_name) AS full_name FROM patients;
 
-7. 
+7. Show first name, last name, and the full province name of each patient.
+   Example: 'Ontario' instead of 'ON'
+   
+   SELECT p.first_name,p.last_name, pr.province_name
+   FROM patients p
+   JOIN province_names pr
+   ON p.province_id=pr.province_id;
+   
+8. Show how many patients have a birth_date with 2010 as the birth year.
+   
+   select count(*) FROM patients
+   where YEAR(birth_date) = 2010;
+   
+9. Show the first_name, last_name, and height of the patient with the greatest height.
+
+    select first_name,last_name,max(height) 
+    FROM patients;
+    
+10. Show all columns for patients who have one of the following patient_ids: 1,45,534,879,1000
+    
+    select * FROM patients
+    WHERE patient_id IN (1,45,534,879,1000);
+    
+11. Show the total number of admissions
+
+    select distinct(count(patient_id)) AS total_admissions
+    FROM admissions;
+    
+ 12. Show all the columns from admissions where the patient was admitted and discharged on the same day.
+ 
+    select * FROM admissions 
+    WHERE discharge_date = admission_date;
+    
+13. Show the patient id and the total number of admissions for patient_id 579.
+
+    select patient_id,count(patient_id) AS total_admissions
+    FROM admissions
+    WHERE patient_id=579;
+    
+14. Based on the cities that our patients live in, show unique cities that are in province_id 'NS'.
+
+    SELECT city as unique_cities FROM patients
+    where province_id='NS'
+    GROUP BY city;
+ 
+ 15. Write a query to find the first_name, last name and birth date of patients who has height greater than 160 and weight greater than 70.
+ 
+     SELECT first_name,last_name, birth_date from patients
+     where height > 160 AND weight > 70;
+     
+16. Write a query to find list of patients first_name, last_name, and allergies where allergies are not null and are from the city of 'Hamilton'
+
+    select first_name, last_name, allergies from patients
+    where allergies IS not NULL AND city = 'Hamilton';
